@@ -48,7 +48,7 @@ bubblesort_button = button.Button(BubbleSortButton,365,110,AlgoMenu_ImageScale)
 insertionsort_button = button.Button(InsertionSortButton,865,110,AlgoMenu_ImageScale)
 selectionsort_button = button.Button(SelectionSortButton,365,210,AlgoMenu_ImageScale)
 shellsort_button = button.Button(ShellSortButton,865,210,AlgoMenu_ImageScale)
-cocktailsort_button = button.Button(CocktailSortButton,500,400,AlgoMenu_ImageScale)
+cocktailsort_button = button.Button(CocktailSortButton,365,310,AlgoMenu_ImageScale)
 
 green_ascending_button = button.Button(MainMenu_GreenAscendingButton,10,165,MainMenu_ImageScale)
 green_descending_button = button.Button(MainMenu_GreenDescendingButton,10,215,MainMenu_ImageScale)
