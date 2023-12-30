@@ -1,6 +1,6 @@
 # Sorting Algorithms Visualiser
 
-![Sorting Algorithms Visualiser Demo](demo.gif)
+![Sorting Algorithms Visualiser Demo](Assets/WindowIcon.png)
 
 ## Overview
 
