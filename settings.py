@@ -10,4 +10,5 @@ pygame.display.set_caption("Sorting Algorithms Visualiser")
 WindowIcon = pygame.image.load("Assets\\WindowIcon48.png").convert_alpha()
 pygame.display.set_icon(WindowIcon)
 FPS = 60
-font = pygame.font.Font('assets\\fonts\\RONORGERIONDEMO-Regular.otf', 12)
+font = pygame.font.Font('assets\\fonts\\RONORGERIONDEMO-Regular.otf', 16)
+lstfont = pygame.font.Font('assets\\fonts\\THE BOLD FONT.ttf', 14)

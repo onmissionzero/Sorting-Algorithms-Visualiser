@@ -1,5 +1,4 @@
-from SortingAlgorithmsVisualiser import draw_list
-from random import randint
+from main import draw_list
 
 #Algorithms
 
@@ -93,8 +92,13 @@ def cocktail_sort(draw_info,ascending=True):
         swapped = False
 
         for i in range(start, end):
-            if (lst[i] > lst[i + 1]):
+            if (lst[i] > lst[i + 1] and ascending):
                 lst[i], lst[i + 1] = lst[i + 1], lst[i]
+                swapped = True
+                draw_list(draw_info,{i:(255,0,0),i+1:(0,255,0)})
+                yield True
+            elif (lst[i] < lst[i + 1] and not ascending):
+                lst[i+1], lst[i] = lst[i], lst[i+1]
                 swapped = True
                 draw_list(draw_info,{i:(255,0,0),i+1:(0,255,0)})
                 yield True
@@ -106,7 +110,10 @@ def cocktail_sort(draw_info,ascending=True):
         end = end-1
  
         for i in range(end-1, start-1, -1):
-            if (lst[i] > lst[i + 1]):
+            if (lst[i] > lst[i + 1] and ascending):
                 lst[i], lst[i + 1] = lst[i + 1], lst[i]
+                swapped = True
+            elif (lst[i] < lst[i + 1] and not ascending):
+                lst[i+1], lst[i] = lst[i], lst[i+1]
                 swapped = True
         start = start + 1
