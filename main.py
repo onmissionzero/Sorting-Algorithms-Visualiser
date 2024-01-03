@@ -6,6 +6,7 @@ import button
 import drawinformation
 import random
 import algorithms
+import sys
 
 pygame.init()
 
@@ -33,6 +34,8 @@ cocktailsort_button = button.Button(365,310,ButtonWidth*WidthMul,ButtonHeight*He
 
 green_ascending_button = button.Button(10,165,ButtonWidth,ButtonHeight,(0,255,0),"Ascending",(0,0,0))
 green_descending_button = button.Button(10,215,ButtonWidth,ButtonHeight,(0,255,0),"Descending",(0,0,0))
+
+submit_button = button.Button(365,310,ButtonWidth*WidthMul,ButtonHeight*HeightMul,ButtonColor,"Submit",(0,0,0))
 
    
 def main_menu_algorithm(sorting_algorithm):
@@ -66,6 +69,74 @@ def main_menu_algorithm(sorting_algorithm):
         pygame.display.update()
      
     pygame.quit()
+
+def main_menu_customlist(lst):
+    clock = pygame.time.Clock()
+    run = True
+    base_font = settings.font
+    user_text = '' 
+    input_rect = pygame.Rect(600, 200, 200, 50) 
+    color_active = pygame.Color((255,255,255)) 
+    color_passive = pygame.Color((200,200,200)) 
+    color = color_passive 
+    active = False
+
+    while run:
+        clock.tick(settings.FPS)
+        settings.WINDOW.fill((0,0,0))
+        if back_button.draw():
+            return lst
+        
+        if exit_button.draw():
+            pygame.quit()
+            exit()
+
+        if submit_button.draw():
+            user_text_list = user_text.split(',')
+            element_to_remove = ''
+            while element_to_remove in user_text_list:
+                user_text_list.remove(element_to_remove)
+            int_list = [int(element) for element in user_text_list]           
+            return int_list
+        
+        text_surface = settings.font.render('Enter your custom list:', False, (255, 255, 255))
+        settings.WINDOW.blit(text_surface,(580,150))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.MOUSEBUTTONDOWN: 
+                if input_rect.collidepoint(event.pos): 
+                    active = True
+                else: 
+                    active = False
+
+            if event.type == pygame.KEYDOWN: 
+
+                # Check for backspace 
+                if event.key == pygame.K_BACKSPACE: 
+
+                    # get text input from 0 to -1 i.e. end. 
+                    user_text = user_text[:-1] 
+
+                # Unicode standard is used for string 
+                # formation 
+                else:
+                    if event.key in (pygame.K_COMMA, pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9):
+                        user_text += event.unicode
+        if active:
+            color = color_active 
+        else: 
+            color = color_passive 
+        pygame.draw.rect(settings.WINDOW, color, input_rect) 
+        text = base_font.render(user_text, True, (0, 0, 0)) 
+        # render at position stated in arguments 
+        settings.WINDOW.blit(text, (input_rect.x+5, input_rect.y+5)) 
+        # set width of textfield so that text cannot get 
+        # outside of user's text input 
+        input_rect.w = max(100, text.get_width()+10) 
+        pygame.draw.rect(settings.WINDOW,(255,255,255),(140,0,4,settings.HEIGHT)) #Seperator
+        pygame.display.update()
+
 
 def generate_starting_list(n,min_val,max_val):
     lst = []
@@ -163,7 +234,12 @@ def main():
             lst = generate_starting_list(n,min_val,max_val)
             draw_info.set_list(lst)
             sorting_algorithm_generator = sorting_algorithm(draw_info,ascending)
-
+        
+        if customlist_button.draw(sorting) and not action:
+            lst = main_menu_customlist(lst)
+            draw_info.set_list(lst)
+            sorting_algorithm_generator = sorting_algorithm(draw_info,ascending)
+        
         if exit_button.draw(sorting) and not action:
             pygame.quit()
             exit()

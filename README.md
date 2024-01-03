@@ -45,12 +45,12 @@ Before running the Sorting Algorithms Visualiser, make sure you have the followi
 3. Run the application:
 
    ```bash
-   python SortingAlgorithmsVisualiser.py
+   python main.py
    ```
 
 ## Usage
 
-- Launch the application by running `SortingAlgorithmsVisualiser.py`.
+- Launch the application by running `main.py`.
 - Select a sorting algorithm from the available options.
 - Choose whether you want to sort the data in ascending or descending order.
 - Click the "Sort" button to start the visualization.
