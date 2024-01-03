@@ -6,7 +6,6 @@ import button
 import drawinformation
 import random
 import algorithms
-import sys
 
 pygame.init()
 
@@ -35,7 +34,7 @@ cocktailsort_button = button.Button(365,310,ButtonWidth*WidthMul,ButtonHeight*He
 green_ascending_button = button.Button(10,165,ButtonWidth,ButtonHeight,(0,255,0),"Ascending",(0,0,0))
 green_descending_button = button.Button(10,215,ButtonWidth,ButtonHeight,(0,255,0),"Descending",(0,0,0))
 
-submit_button = button.Button(365,310,ButtonWidth*WidthMul,ButtonHeight*HeightMul,ButtonColor,"Submit",(0,0,0))
+submit_button = button.Button(610,310,ButtonWidth*WidthMul,ButtonHeight*HeightMul,ButtonColor,"Submit",(0,0,0))
 
    
 def main_menu_algorithm(sorting_algorithm):
@@ -75,7 +74,7 @@ def main_menu_customlist(lst):
     run = True
     base_font = settings.font
     user_text = '' 
-    input_rect = pygame.Rect(600, 200, 200, 50) 
+    input_rect = pygame.Rect(570, 220, 300, 30) 
     color_active = pygame.Color((255,255,255)) 
     color_passive = pygame.Color((200,200,200)) 
     color = color_passive 
@@ -96,7 +95,9 @@ def main_menu_customlist(lst):
             element_to_remove = ''
             while element_to_remove in user_text_list:
                 user_text_list.remove(element_to_remove)
-            int_list = [int(element) for element in user_text_list]           
+            int_list = [int(element) for element in user_text_list]
+            if(not int_list):
+                return lst
             return int_list
         
         text_surface = settings.font.render('Enter your custom list:', False, (255, 255, 255))
@@ -107,11 +108,12 @@ def main_menu_customlist(lst):
             if event.type == pygame.MOUSEBUTTONDOWN: 
                 if input_rect.collidepoint(event.pos): 
                     active = True
+                    color = color_active
                 else: 
                     active = False
+                    color = color_passive
 
-            if event.type == pygame.KEYDOWN: 
-
+            if event.type == pygame.KEYDOWN and active:
                 # Check for backspace 
                 if event.key == pygame.K_BACKSPACE: 
 
@@ -122,18 +124,14 @@ def main_menu_customlist(lst):
                 # formation 
                 else:
                     if event.key in (pygame.K_COMMA, pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9):
-                        user_text += event.unicode
-        if active:
-            color = color_active 
-        else: 
-            color = color_passive 
-        pygame.draw.rect(settings.WINDOW, color, input_rect) 
+                        user_text += event.unicode 
+        pygame.draw.rect(settings.WINDOW, color, input_rect,0,3) 
         text = base_font.render(user_text, True, (0, 0, 0)) 
         # render at position stated in arguments 
         settings.WINDOW.blit(text, (input_rect.x+5, input_rect.y+5)) 
         # set width of textfield so that text cannot get 
         # outside of user's text input 
-        input_rect.w = max(100, text.get_width()+10) 
+        input_rect.w = max(input_rect.w, text.get_width()+10) 
         pygame.draw.rect(settings.WINDOW,(255,255,255),(140,0,4,settings.HEIGHT)) #Seperator
         pygame.display.update()
 
