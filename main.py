@@ -6,63 +6,33 @@ import button
 import drawinformation
 import random
 import algorithms
-import sys
-import os
-
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
 
 pygame.init()
 
-
-#LoadImages
-MainMenu_SortButton = pygame.image.load(resource_path("Assets\\button_sort.png")).convert_alpha()
-MainMenu_GenerateButton = pygame.image.load(resource_path("Assets\\button_generate.png")).convert_alpha()
-MainMenu_AlgorithmButton = pygame.image.load(resource_path("Assets\\button_algorithm.png")).convert_alpha()
-MainMenu_BackButton = pygame.image.load(resource_path("Assets\\button_back.png")).convert_alpha()
-MainMenu_ExitButton = pygame.image.load(resource_path("Assets\\button_exit.png")).convert_alpha()
-MainMenu_CustomListButton = pygame.image.load(resource_path("Assets\\button_customlist.png")).convert_alpha()
-MainMenu_PauseButton = pygame.image.load(resource_path("Assets\\button_pause.png")).convert_alpha()
-MainMenu_AscendingButton = pygame.image.load(resource_path("Assets\\button_ascending.png")).convert_alpha()
-MainMenu_DescendingButton = pygame.image.load(resource_path("Assets\\button_descending.png")).convert_alpha()
-BubbleSortButton = pygame.image.load(resource_path("Assets\\button_bubblesort.png")).convert_alpha()
-InsertionSortButton = pygame.image.load(resource_path("Assets\\button_insertionsort.png")).convert_alpha()
-SelectionSortButton = pygame.image.load(resource_path("Assets\\button_selectionsort.png")).convert_alpha()
-ShellSortButton = pygame.image.load(resource_path("Assets\\button_shellsort.png")).convert_alpha()
-CocktailSortButton = pygame.image.load(resource_path("Assets\\button_cocktailsort.png")).convert_alpha()
-
-MainMenu_GreenAscendingButton = pygame.image.load(resource_path("Assets\\button_greenascending.png")).convert_alpha()
-MainMenu_GreenDescendingButton = pygame.image.load(resource_path("Assets\\button_greendescending.png")).convert_alpha()
-
-MainMenu_ImageScale = 0.6
-AlgoMenu_ImageScale = 1.0
-
-
 #ButtonInstances
-sort_button = button.Button(MainMenu_SortButton,10,10,MainMenu_ImageScale)
-algorithm_button = button.Button(MainMenu_AlgorithmButton,10,60,MainMenu_ImageScale)
-generate_button = button.Button(MainMenu_GenerateButton,10,110,MainMenu_ImageScale)
-back_button = button.Button(MainMenu_BackButton,10,160,MainMenu_ImageScale)
-ascending_button = button.Button(MainMenu_AscendingButton,10,165,MainMenu_ImageScale)
-descending_button = button.Button(MainMenu_DescendingButton,10,215,MainMenu_ImageScale)
-pause_button = button.Button(MainMenu_PauseButton,10,280,MainMenu_ImageScale)
-customlist_button = button.Button(MainMenu_CustomListButton,10,345,MainMenu_ImageScale)
-exit_button = button.Button(MainMenu_ExitButton,10,410,MainMenu_ImageScale)
+ButtonWidth = 122
+ButtonHeight = 32
+ButtonColor = (255,255,255)
+sort_button = button.Button(10,10,ButtonWidth,ButtonHeight,ButtonColor,"Sort",(0,0,0))
+algorithm_button = button.Button(10,60,ButtonWidth,ButtonHeight,ButtonColor,"Algorithms",(0,0,0))
+generate_button = button.Button(10,110,ButtonWidth,ButtonHeight,ButtonColor,"Generate",(0,0,0))
+back_button = button.Button(10,160,ButtonWidth,ButtonHeight,ButtonColor,"Back",(0,0,0))
+ascending_button = button.Button(10,165,ButtonWidth,ButtonHeight,ButtonColor,"Ascending",(0,0,0))
+descending_button = button.Button(10,215,ButtonWidth,ButtonHeight,ButtonColor,"Descending",(0,0,0))
+pause_button = button.Button(10,280,ButtonWidth,ButtonHeight,ButtonColor,"Pause",(0,0,0))
+customlist_button = button.Button(10,345,ButtonWidth,ButtonHeight,ButtonColor,"Custom List",(0,0,0))
+exit_button = button.Button(10,410,ButtonWidth,ButtonHeight,ButtonColor,"Exit",(0,0,0))
 
+WidthMul = 1.8
+HeightMul = 1.4
+bubblesort_button = button.Button(365,110,ButtonWidth*WidthMul,ButtonHeight*HeightMul,ButtonColor,"Bubble Sort",(0,0,0))
+insertionsort_button = button.Button(865,110,ButtonWidth*WidthMul,ButtonHeight*HeightMul,ButtonColor,"Insertion Sort",(0,0,0))
+selectionsort_button = button.Button(365,210,ButtonWidth*WidthMul,ButtonHeight*HeightMul,ButtonColor,"Selection Sort",(0,0,0))
+shellsort_button = button.Button(865,210,ButtonWidth*WidthMul,ButtonHeight*HeightMul,ButtonColor,"Shell Sort",(0,0,0))
+cocktailsort_button = button.Button(365,310,ButtonWidth*WidthMul,ButtonHeight*HeightMul,ButtonColor,"Cocktail Sort",(0,0,0))
 
-bubblesort_button = button.Button(BubbleSortButton,365,110,AlgoMenu_ImageScale)
-insertionsort_button = button.Button(InsertionSortButton,865,110,AlgoMenu_ImageScale)
-selectionsort_button = button.Button(SelectionSortButton,365,210,AlgoMenu_ImageScale)
-shellsort_button = button.Button(ShellSortButton,865,210,AlgoMenu_ImageScale)
-cocktailsort_button = button.Button(CocktailSortButton,365,310,AlgoMenu_ImageScale)
-
-green_ascending_button = button.Button(MainMenu_GreenAscendingButton,10,165,MainMenu_ImageScale)
-green_descending_button = button.Button(MainMenu_GreenDescendingButton,10,215,MainMenu_ImageScale)
+green_ascending_button = button.Button(10,165,ButtonWidth,ButtonHeight,(0,255,0),"Ascending",(0,0,0))
+green_descending_button = button.Button(10,215,ButtonWidth,ButtonHeight,(0,255,0),"Descending",(0,0,0))
 
    
 def main_menu_algorithm(sorting_algorithm):
@@ -132,7 +102,7 @@ def draw_list(draw_info, color_positions={}, clear_bg=False):
 def main():
     clock = pygame.time.Clock()
     n = 100
-    min_val = 0
+    min_val = 1
     max_val = 100
     lst = generate_starting_list(n,min_val,max_val)
     draw_info = drawinformation.DrawInformation(lst)
@@ -162,7 +132,7 @@ def main():
         else:
             draw_list(draw_info)   
 
-        if sort_button.draw() and not action:
+        if sort_button.draw(sorting) and not action:
             sorting = True
 
         if pause_button.draw() and action:
@@ -173,28 +143,28 @@ def main():
             if green_ascending_button.draw() and not action:
                 ascending = True
                 sorting_algorithm_generator = sorting_algorithm(draw_info,ascending)
-        if descending_button.draw() and not action:
+        if descending_button.draw(sorting) and not action:
                 ascending = False
                 sorting_algorithm_generator = sorting_algorithm(draw_info,ascending)
 
         if not ascending:
-            if ascending_button.draw() and not action:
+            if ascending_button.draw(sorting) and not action:
                 ascending = True
                 sorting_algorithm_generator = sorting_algorithm(draw_info,ascending)
             if green_descending_button.draw() and not action:
                 ascending = False
                 sorting_algorithm_generator = sorting_algorithm(draw_info,ascending)
 
-        if algorithm_button.draw() and not action:
+        if algorithm_button.draw(sorting) and not action:
             sorting_algorithm = main_menu_algorithm(sorting_algorithm)
             sorting_algorithm_generator = sorting_algorithm(draw_info,ascending)
 
-        if generate_button.draw() and not action:
+        if generate_button.draw(sorting) and not action:
             lst = generate_starting_list(n,min_val,max_val)
             draw_info.set_list(lst)
             sorting_algorithm_generator = sorting_algorithm(draw_info,ascending)
 
-        if exit_button.draw() and not action:
+        if exit_button.draw(sorting) and not action:
             pygame.quit()
             exit()
 

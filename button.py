@@ -5,30 +5,37 @@ pygame.init()
 
 
 class Button():
-    def __init__(self,image,x,y,scale):
-        width = image.get_width()
-        height = image.get_height()
-        self.image = pygame.transform.scale(image,(int(width*scale),int(height*scale)))
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x,y)
+    def __init__(self, x, y, width, height, ButtonColor, Text, TextColor):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.buttoncolor = ButtonColor
+        if(self.buttoncolor==(0,255,0)):
+            self.hovercolor = tuple(map(lambda i, j: i - j, self.buttoncolor, (0,35,0)))
+        else:
+            self.hovercolor = tuple(map(lambda i, j: i - j, self.buttoncolor, (35,35,35)))
+        self.text = Text
+        self.textcolor = TextColor
         self.clicked = False
-    
-    def draw(self):
+        font_size = min(self.rect.width // len(self.text), self.rect.height // 2)
+        self.font =pygame.font.Font('assets\\fonts\\RONORGERIONDEMO-Regular.otf', font_size)
+
+    def draw(self,sorting=False):
         action = False
-
-        #draw button on screen
-        settings.WINDOW.blit(self.image,(self.rect.x,self.rect.y))
-
-        #Get Mouse Position
+        pygame.draw.rect(settings.WINDOW, self.buttoncolor, self.rect, 0, 3)
         pos = pygame.mouse.get_pos()
-
-        #check mouseover and clicked conditions
         if self.rect.collidepoint(pos):
-            #ButtonHoverAnimationHere!!!!!!!!!
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+            pygame.draw.rect(settings.WINDOW,self.hovercolor, self.rect, 0, 3)
+            if pygame.mouse.get_pressed()[0] == 1 and not self.clicked:
                 action = True
                 self.clicked = True
             if pygame.mouse.get_pressed()[0] == 0:
                 self.clicked = False
+        if(sorting):
+            pygame.draw.rect(settings.WINDOW,(127,127,127), self.rect, 0, 3)            
+        text_surface = self.font.render(self.text, True, self.textcolor)
+        text_rect = text_surface.get_rect(center=self.rect.center)
+        settings.WINDOW.blit(text_surface, text_rect)
 
-        return action 
+        if pygame.mouse.get_pressed()[0] == 0:
+            self.clicked = False
+
+        return action
