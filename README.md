@@ -1,6 +1,10 @@
 # Sorting Algorithms Visualiser
 
-![Sorting Algorithms Visualiser Demo](Assets/WindowIcon.png)
+![Sorting Algorithms Visualiser Icon](Assets/WindowIcon.png)
+![Main Menu](Assets/sample/main.png)
+![Algorithms](Assets/sample/algorithms.png)
+![Sample Sorting](Assets/sample/sort.gif)
+
 
 ## Overview
 
